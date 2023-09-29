@@ -2,7 +2,7 @@ import { useState } from "react"
 import { MovieResults } from "./MovieResults"
 import { MovieSearch } from "./MovieSearch"
 import { MovieInfo } from "./MovieInfo"
-
+import { MovieHome } from "./MovieHome"
 
 export const Movie = () => {
     const [searchInput, setSearchInput] = useState();
@@ -11,7 +11,7 @@ export const Movie = () => {
     const [year, setYear] = useState();
     const [rating, setRating] = useState();
     const [search, setSearch] = useState([]);
-    const [dataVal, setDataVal] = useState();
+    const [dataError, setDataError] = useState();
 
     const handleChange = (e) => {
         setSearchInput(e.target.value)
@@ -23,10 +23,10 @@ export const Movie = () => {
 
         if (data.Error) {
             setSearch(data.Error);
-            setDataVal(false);
+            setDataError(true);
         } else {
             setSearch(data.Search);
-            setDataVal(true);
+            setDataError(false);
         }
     }
     const getSpecificData = async (index) => {
@@ -40,6 +40,11 @@ export const Movie = () => {
     };
     const searchButton = () => {
         getSearchData();
+        setSearchInput("");
+        setPoster();
+        setTitle();
+        setYear();
+        setRating();
     };
     const imageClick = (index) => {
         getSpecificData(index);
@@ -49,13 +54,14 @@ export const Movie = () => {
     return (
         <>
             <MovieSearch handleChange={handleChange} searchButton={searchButton} searchInput={searchInput} />
+            <MovieHome />
             <MovieInfo title={title} rating={rating} year={year} poster={poster} />
             {
-                dataVal === false &&
+                dataError === true &&
                 (<p>{search} Please refine search.</p>)
             }
             {
-                dataVal === true &&
+                dataError === false &&
                 <MovieResults search={search} imageClick={imageClick} />
             }
 
