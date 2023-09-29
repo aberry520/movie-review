@@ -1,7 +1,14 @@
-export const MovieResults = () => {
+export const MovieResults = ({search, imageClick}) => {
     return (
-        <>
-            {/* <p>test movie results</p> */}
+        <><ul>
+        {
+            
+            search.map((item, index) =>
+            
+                <li key={index}><img src={item.Poster} onClick={() => { imageClick(index) }} /></li>
+            )
+            
+        }</ul>
         </>
     )
 }
