@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { MovieResults } from "./MovieResults"
 import { MovieSearch } from "./MovieSearch"
+import { MovieInfo } from "./MovieInfo"
 
 
 export const Movie = () => {
@@ -42,30 +43,22 @@ export const Movie = () => {
     };
     const imageClick = (index) => {
         getSpecificData(index);
-        
+        setSearch([]);
     }
     // console.log(search[3].Title);
     return (
         <>
             <MovieSearch handleChange={handleChange} searchButton={searchButton} searchInput={searchInput} />
-            <MovieResults />
-            <h1>{title}</h1>
-            <p>{rating}</p>
-            <p>{year}</p>
-            <img src={poster} />
-            <ul>
-                {
-                    dataVal === false &&
-                    (<p>{search} Please refine search.</p>)
+            <MovieInfo title={title} rating={rating} year={year} poster={poster} />
+            {
+                dataVal === false &&
+                (<p>{search} Please refine search.</p>)
+            }
+            {
+                dataVal === true &&
+                <MovieResults search={search} imageClick={imageClick} />
+            }
 
-                }
-                {
-                    dataVal === true &&
-                    (search.map((item, index) =>
-                        <li key={index}><img src={item.Poster} onClick={()=>{imageClick(index)}}/></li>
-                    ))
-                }
-            </ul>
         </>
     )
 }
