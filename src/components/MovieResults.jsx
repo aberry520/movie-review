@@ -1,25 +1,25 @@
 import styled from "styled-components"
 
-const MovieList = styled.div`
-        ul{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;  
-        }
+// const MovieList = styled.div`
+//         ul{
+//             display: flex;
+//             flex-direction: column;
+//             justify-content: center;
+//             gap: 10px;  
+//         }
         
-        li {
-            max-width: fit-content;
-        }
-        label{
-            display: flex;
-            flex-direction: column;
-        }
-    `
+//         li {
+//             max-width: fit-content;
+//         }
+//         label{
+//             display: flex;
+//             flex-direction: column;
+//         }
+//     `
 export const MovieResults = ({ search, imageClick }) => {
     return (
         <>
-            <MovieList>
+            <div className="MovieList">
                 <ul>
                 {
                     search.map((item, index) =>
@@ -33,7 +33,7 @@ export const MovieResults = ({ search, imageClick }) => {
                     )
                 }
                 </ul>
-            </MovieList>
+            </div>
         </>
     )
 }

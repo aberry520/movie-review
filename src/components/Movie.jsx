@@ -32,6 +32,7 @@ export const Movie = () => {
         }
     }
     const getSpecificData = async (index) => {
+        setPage("MovieInfo");
         const apiUrl = `http://www.omdbapi.com/?i=${search[index].imdbID}&apikey=af468481&plot=full`;
         const response = await fetch(apiUrl);
         const data = await response.json();
@@ -47,6 +48,7 @@ export const Movie = () => {
         setPlot(data.Plot);
     };
     const getSpecificHomeData = async (index) => {
+        setPage("MovieInfo");
         const apiUrl = `http://www.omdbapi.com/?i=${homeDisplay[index].imdbID}&apikey=af468481&plot=full`;
         const response = await fetch(apiUrl);
         const data = await response.json();
@@ -86,24 +88,28 @@ export const Movie = () => {
         "Adventure",
         "Journey"]
     const getHomeData = async () => {
+
         const apiUrl = `http://www.omdbapi.com/?S=${WORD_ARR[randomID(0, 19)]}&apikey=af468481&page=${randomID(1, 3)}&type=movie`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-        setHomeDisplay(data.Search);        
-        setPoster();
-        setTitle();
-        setYear();
-        setRating();
-        setPlot();
+        setHomeDisplay(data.Search);
+        ////////////////     
+        // setPoster();
+        // setTitle();
+        // setYear();
+        // setRating();
+        // setPlot();
+        setPage();
     }
     const searchButton = () => {
         getSearchData();
+        setPage("MovieResults");
         setSearchInput("");
-        setPoster();
-        setTitle();
-        setYear();
-        setRating();
-        setPlot();
+        // setPoster();
+        // setTitle();
+        // setYear();
+        // setRating();
+        // setPlot();
         setHomeDisplay([]);
 
     };
@@ -115,22 +121,31 @@ export const Movie = () => {
         getSpecificHomeData(index);
         setHomeDisplay([]);
     }
+    const [page, setPage] = useState();
+    console.log(page);
     return (
         <>
-            <MovieSearch handleChange={handleChange} searchButton={searchButton} searchInput={searchInput} getHomeData={getHomeData} />
+            {<MovieSearch handleChange={handleChange} searchButton={searchButton} searchInput={searchInput} getHomeData={getHomeData} />}
             <MovieHome homeDisplay={homeDisplay} homeImageClick={homeImageClick} getHomeData={getHomeData} searchInput={searchInput} />
 
             {
-
+                page === "MovieInfo" &&
+                (<MovieInfo title={title} rating={rating} year={year} poster={poster} plot={plot} />)
             }
-            <MovieInfo title={title} rating={rating} year={year} poster={poster} plot={plot} />
+            {
+                page !== "MovieInfo" &&
+                ("")
+            }
             {
                 dataError === true &&
                 (<p>{search} Please refine search.</p>)
             }
             {
-                dataError === false &&
-                <MovieResults search={search} imageClick={imageClick} />
+                page === "MovieResults" &&
+                (
+                    dataError === false &&
+                    <MovieResults search={search} imageClick={imageClick} />
+                )
             }
 
         </>

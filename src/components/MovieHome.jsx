@@ -16,6 +16,7 @@ const MovieList = styled.div`
         label{
             display: flex;
             flex-direction: column;
+            max-width: 300px;
         }
     `
 
