@@ -35,9 +35,8 @@ export const Movie = () => {
         const apiUrl = `http://www.omdbapi.com/?i=${search[index].imdbID}&apikey=af468481&plot=full`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-        if (data.Poster === "N/A"){
+        if (data.Poster === "N/A") {
             setPoster("../public/images/blank-poster.jpeg")
-            console.log("N/A")
         } else {
             setPoster(data.Poster);
         }
@@ -51,13 +50,12 @@ export const Movie = () => {
         const apiUrl = `http://www.omdbapi.com/?i=${homeDisplay[index].imdbID}&apikey=af468481&plot=full`;
         const response = await fetch(apiUrl);
         const data = await response.json();
-        if (data.Poster === "N/A"){
+        if (data.Poster === "N/A") {
             setPoster("../public/images/blank-poster.jpeg")
-            console.log("N/A")
         } else {
             setPoster(data.Poster);
         }
-        
+
         setTitle(data.Title);
         setYear(data.Released);
         setRating(data.Rated);
@@ -88,11 +86,15 @@ export const Movie = () => {
         "Adventure",
         "Journey"]
     const getHomeData = async () => {
-            const apiUrl = `http://www.omdbapi.com/?S=${WORD_ARR[randomID(0, 19)]}&apikey=af468481&page=${randomID(0,10)}&type=movie&y=${randomID(2009,2023)}`;
-            const response = await fetch(apiUrl);
-            const data = await response.json();
-            setHomeDisplay(data.Search);
-            console.log(data.Search);
+        const apiUrl = `http://www.omdbapi.com/?S=${WORD_ARR[randomID(0, 19)]}&apikey=af468481&page=${randomID(1, 3)}&type=movie`;
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        setHomeDisplay(data.Search);        
+        setPoster();
+        setTitle();
+        setYear();
+        setRating();
+        setPlot();
     }
     const searchButton = () => {
         getSearchData();
@@ -103,7 +105,7 @@ export const Movie = () => {
         setRating();
         setPlot();
         setHomeDisplay([]);
-        
+
     };
     const imageClick = (index) => {
         getSpecificData(index);
@@ -112,16 +114,16 @@ export const Movie = () => {
     const homeImageClick = (index) => {
         getSpecificHomeData(index);
         setHomeDisplay([]);
-    }    
+    }
     return (
         <>
-            <MovieSearch handleChange={handleChange} searchButton={searchButton} searchInput={searchInput} getHomeData={getHomeData}/>
+            <MovieSearch handleChange={handleChange} searchButton={searchButton} searchInput={searchInput} getHomeData={getHomeData} />
             <MovieHome homeDisplay={homeDisplay} homeImageClick={homeImageClick} getHomeData={getHomeData} searchInput={searchInput} />
 
             {
 
             }
-            <MovieInfo title={title} rating={rating} year={year} poster={poster} plot={plot}/>
+            <MovieInfo title={title} rating={rating} year={year} poster={poster} plot={plot} />
             {
                 dataError === true &&
                 (<p>{search} Please refine search.</p>)
