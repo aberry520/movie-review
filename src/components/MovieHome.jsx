@@ -1,4 +1,23 @@
 import { useEffect } from "react"
+import styled from "styled-components"
+
+const MovieList = styled.div`
+        ul{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;  
+        }
+        
+        li {
+            max-width: fit-content;
+        }
+        label{
+            display: flex;
+            flex-direction: column;
+        }
+    `
 
 export const MovieHome = ({homeDisplay, homeImageClick, getHomeData, searchInput}) => {
     useEffect(()=>{
@@ -13,7 +32,8 @@ export const MovieHome = ({homeDisplay, homeImageClick, getHomeData, searchInput
     }
     return (
         <>
-        
+            <MovieList>
+                <ul>
             {
                 searchInput == "" &&
                 (homeDisplay.map((item, index) =>
@@ -26,7 +46,8 @@ export const MovieHome = ({homeDisplay, homeImageClick, getHomeData, searchInput
                     </li>
                 ))
             }
-
+            </ul>
+</MovieList>
         </>
     )
 }
